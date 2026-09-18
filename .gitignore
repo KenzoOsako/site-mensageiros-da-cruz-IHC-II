@@ -1,0 +1,14 @@
+node_modules/
+.next/
+.env*
+!.env.example
+*.tsbuildinfo
+tmp/
+
+# Artefatos locais e documentos acadêmicos de referência (preservados no disco).
+/*.pdf
+_bmad/render/
+__pycache__/
+*.pyc
+.vercel/
+*.log
