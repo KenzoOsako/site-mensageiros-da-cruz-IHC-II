@@ -92,7 +92,7 @@ No painel Supabase, procure **Connect** e **Settings → API Keys**. Os nomes de
 
 Nunca coloque a chave administrativa no campo da chave pública. Neste ambiente local, as chaves existentes do projeto já estão em `.env.local` e a Data API respondeu ao teste. Em um novo computador ou na Vercel, configure as variáveis novamente; não copie o segredo para o Git. Se o painel apresentar um modelo novo de chaves, confira a [documentação de API Keys](https://supabase.com/docs/guides/api/api-keys) antes de substituir credenciais.
 
-Em **Authentication → URL Configuration**, use `http://localhost:3000` como Site URL no teste local; inclua `http://localhost:3000/auth/confirm` entre os redirecionamentos permitidos. Se usar outra porta/host, mantenha a mesma origem em todas as configurações. Na publicação, troque Site URL para o domínio HTTPS definitivo e permita seu `/auth/confirm`. Os scripts geram o link a partir de `NEXT_PUBLIC_SITE_URL`, portanto uma origem errada produz convites para o endereço errado. [Configuração de URLs](https://supabase.com/docs/guides/auth/redirect-urls).
+Em **Authentication → URL Configuration**, a Site URL do projeto hospedado é `https://site-mensageiros-da-cruz-ihc-ii.vercel.app`. Estão permitidos `https://site-mensageiros-da-cruz-ihc-ii.vercel.app/auth/confirm` e `http://localhost:3000/auth/confirm`, este último apenas para testes locais. Se usar outra porta/host, mantenha a mesma origem em todas as configurações. Os scripts geram o link a partir de `NEXT_PUBLIC_SITE_URL`, portanto uma origem errada produz convites para o endereço errado. [Configuração de URLs](https://supabase.com/docs/guides/auth/redirect-urls).
 
 Desabilitar cadastro público no Supabase é necessário mesmo sem uma tela de cadastro, pois a API de Auth também existe. Confira as opções em [General configuration](https://supabase.com/docs/guides/auth/general-configuration). Não use SQL manual para definir senha de participante. A primeira pessoa coordenadora também define sua senha pelo link de ativação.
 
@@ -111,7 +111,7 @@ A coordenação deve revisar os compromissos de quem saiu: na ação, pode liber
 
 ## Publicar na Vercel
 
-Importe o repositório como Next.js, configure as quatro variáveis também na Vercel e defina `NEXT_PUBLIC_SITE_URL` como a origem HTTPS final. Execute novo deploy depois de alterar variáveis. Não configure rewrite de SPA. Mantenha ambientes de demonstração separados dos dados reais. Nenhum deploy foi realizado por este projeto até agora.
+O projeto está publicado em **[site-mensageiros-da-cruz-ihc-ii.vercel.app](https://site-mensageiros-da-cruz-ihc-ii.vercel.app/)**, a partir de `main`, como Next.js na Vercel Hobby. As quatro variáveis estão cadastradas como segredos somente em **Production**, com `NEXT_PUBLIC_SITE_URL` igual à origem HTTPS publicada. O Supabase usa essa origem como Site URL e permite seu `/auth/confirm`. Em 22/09/2026, o deployment de `2c756de` estava Ready; a página pública, a prévia interativa, a confirmação fictícia de participação e a tela de entrada foram verificadas no domínio HTTPS. A autenticação com contas reais ainda precisa de validação. Não configure rewrite de SPA. Mantenha ambientes de demonstração separados dos dados reais.
 
 Passo a passo:
 
@@ -119,7 +119,7 @@ Passo a passo:
 2. Use a raiz do repositório como Root Directory, preset **Next.js**, instalação `npm ci` e build `npm run build`; mantenha o diretório de saída padrão do framework. [Documentação oficial](https://vercel.com/docs/frameworks/full-stack/nextjs).
 3. Configure as quatro variáveis da tabela no ambiente **Production**. Guarde a chave de serviço como segredo do servidor. Não reutilize o banco real em previews de alterações não revisadas.
 4. Faça o deploy, confirme o domínio gerado, ajuste `NEXT_PUBLIC_SITE_URL` para essa origem e faça redeploy se ela mudou. Atualize também Site URL e redirecionamentos no Supabase.
-5. Acesse `/`, `/previa`, `/entrar` e o fluxo completo com contas fictícias. Gere novos links se os anteriores apontavam para localhost. Só então convide participantes reais.
+5. As rotas `/`, `/previa` e `/entrar` já carregaram em produção. Ainda execute o fluxo completo com contas fictícias depois de criar a primeira coordenação. Gere novos links se os anteriores apontavam para localhost. Só então convide participantes reais.
 6. Defina responsáveis por manutenção, recuperação de acesso, atualização de dependências e backup/restauração. Guardar código no GitHub não é backup do banco.
 
 O [plano Hobby da Vercel](https://vercel.com/docs/plans/hobby) é gratuito e restrito a uso pessoal ou não comercial; a equipe e a entidade devem confirmar que o uso pretendido se enquadra nessa condição. O [Supabase Free](https://supabase.com/pricing) oferece 500 MB de banco e pode [pausar projetos com pouca atividade após sete dias](https://supabase.com/docs/guides/platform/free-project-pausing). Não há backup automático disponível para recuperação no plano gratuito: a [recomendação oficial](https://supabase.com/docs/guides/platform/backups) é exportar regularmente os dados com `supabase db dump` e guardar cópias fora do serviço. Definir responsável, frequência, local protegido e teste de restauração antes de armazenar dados reais. A gratuidade não garante disponibilidade contínua.
@@ -151,7 +151,7 @@ Esse auxiliar usa o Python disponível e Jinja2 em `tmp/python-packages` para co
 
 ## Antes da avaliação com o grupo
 
-Validar textos, rotina de convites, necessidades por ação e termos usados nas tarefas. Obter autorização antes de usar fotos ou contatos. Avaliar no celular e por teclado: encontrar uma ação, entender instruções, confirmar participação, assumir/concluir tarefa e distinguir oferta de recebimento. Não cadastrar beneficiários nem dados sensíveis. Publicação e ativação real dependem das contas da equipe e dessa validação.
+Validar textos, rotina de convites, necessidades por ação e termos usados nas tarefas. Obter autorização antes de usar fotos ou contatos. Avaliar no celular e por teclado: encontrar uma ação, entender instruções, confirmar participação, assumir/concluir tarefa e distinguir oferta de recebimento. Não cadastrar beneficiários nem dados sensíveis. A ativação para o grupo depende das contas da equipe e dessa validação.
 
 ## Tudo o que falta para entrar em uso
 
@@ -164,7 +164,8 @@ Validar textos, rotina de convites, necessidades por ação e termos usados nas 
 - [ ] Testar no serviço real a separação de dados entre os dois participantes e a visão administrativa; conferir também Minhas confirmações na coordenação.
 - [ ] Confirmar persistência após recarregar: ação, participação, tarefa, oferta e recebimento parcial.
 - [ ] Testar disputa pela mesma tarefa, cancelamento de ação, recebimento desatualizado e perda de acesso de membro desativado.
-- [ ] Concluir a configuração de segurança da conta Vercel, criar projeto, configurar variáveis e domínio, publicar e repetir os fluxos essenciais em HTTPS.
+- [x] Concluir 2FA da conta Vercel, criar projeto ligado ao GitHub, configurar quatro variáveis somente em Production, publicar e verificar páginas públicas e de entrada em HTTPS.
+- [x] Definir Site URL e retorno HTTPS no Supabase, preservando o retorno local para desenvolvimento.
 - [ ] Conferir elegibilidade, limites e adequação dos planos gratuitos da equipe; definir backup, teste de restauração e procedimento para indisponibilidade.
 
 ### Prioridade 2 — validar com a entidade e entregar a extensão
