@@ -55,7 +55,7 @@ npm ci --cache ./tmp/npm-cache
 npm run dev
 ```
 
-Abra http://localhost:3000. `/` apresenta o grupo. `/previa` oferece agenda, detalhes, participação, tarefas, ofertas e recebimentos com **dados fictícios, somente em memória**. Recarregar zera a demonstração. `/entrar` explica quando o ambiente real está indisponível. Nenhum contato ou calendário oficial foi inventado.
+Abra http://localhost:3000. `/` apresenta o grupo e o Instagram autorizado [@mensageirosdacruz_tupa](https://www.instagram.com/mensageirosdacruz_tupa/). `/previa` oferece agenda, detalhes, participação, tarefas, ofertas e recebimentos com **dados fictícios, somente em memória**. Recarregar zera a demonstração. `/entrar` explica quando o ambiente real está indisponível. Nenhum calendário oficial foi inventado.
 
 ## Ativar a área real
 
@@ -169,7 +169,7 @@ Validar textos, rotina de convites, necessidades por ação e termos usados nas 
 
 ### Prioridade 2 — validar com a entidade e entregar a extensão
 
-- [ ] Confirmar textos públicos, canal de contato, identidade visual e uso autorizado de fotos/logotipo. Atualmente não há conteúdo oficial de contato/fotos inventado.
+- [ ] Validar os demais textos públicos e a identidade visual com a entidade; confirmar uso de fotos/logotipo. O Instagram do grupo foi autorizado pela equipe e já consta na página pública.
 - [ ] Observar a rotina e validar necessidades com coordenação e jovens; registrar retorno e alterações necessárias.
 - [ ] Definir responsáveis por convites, organização das ações, recebimentos e suporte.
 - [ ] Definir quais dados são necessários, regras de acesso/retenção/exclusão e orientação para participação de menores com a entidade. Confirmação no site não substitui autorização do responsável.

@@ -13,7 +13,7 @@ Fonte: `Trabalho 2.pdf` e `Trabalho 2 - formulário.pdf`, disciplina SI406, 2º 
 
 - Nome: **Mensageiros da Cruz Tupã**, grupo vinculado à **Paróquia São Pedro Apóstolo**.
 - CNPJ do grupo: **não possui**, conforme informado pela equipe; conferir se o formulário pede o CNPJ da paróquia por ser a entidade maior.
-- Endereço web ou canal oficial de contato: **[confirmar publicação autorizada]**.
+- Endereço web ou canal oficial de contato: **Instagram [@mensageirosdacruz_tupa](https://www.instagram.com/mensageirosdacruz_tupa/)**, autorizado pela equipe para divulgação.
 - Categoria da entidade: **coletivo**, conforme informado pela equipe; o “ONG” marcado no modelo é apenas exemplo.
 - Representante da entidade: **informado à equipe e autorizado a assinar; nome e contato ficam apenas no formulário local por se tratar de dados pessoais**. Confirmar se há outros responsáveis ou interlocutores.
 - Informações sobre a entidade: o grupo promove a formação cristã de jovens, principalmente de 12 a 18 anos, incluindo participantes de outras idades, por meio de encontros e da prática comunitária. Realiza visitas a instituições como Casa de Idosos, APAE e Casa do Garoto e auxilia atividades da comunidade paroquial, como quermesses. Suas ações buscam convivência, solidariedade e serviço ao próximo. A organização relatada é predominantemente manual; a equipe ainda investigará com o grupo quais dificuldades são prioritárias e se a solução proposta as atende.
@@ -52,8 +52,8 @@ As datas abaixo foram informadas pela equipe. Confirmar com a entidade e o profe
 | 7. Melhorias | 05–11/11 | Correções e reteste |
 | 8. Devolutiva e documentação | 12–18/11 | Resultado apresentado e orientação |
 
-Relatos semanais ao professor acompanham todas as etapas. As semanas de 01–07/10 e 22–28/10 não constam do calendário informado e precisam ser confirmadas, assim como o ano das datas (aqui interpretado como 2026 pelo cabeçalho do trabalho).
+Relatos ao professor acompanham as semanas de atividade. As pausas de 01–07/10 e 22–28/10 foram confirmadas como intencionais pela equipe. O ano das datas foi interpretado como 2026 pelo cabeçalho do trabalho.
 
 ## Antes da assinatura e entrega
 
-Confirmar o texto e a categoria da entidade, os canais de contato autorizados, o CNPJ da paróquia (se aplicável), os períodos omitidos do cronograma e as regras para participação de menores. Transferir o conteúdo aprovado ao PDF oficial. A assinatura deve ser feita pelo representante da entidade, pelos seis alunos e pelo professor; não inserir assinaturas simuladas. O enunciado informa entrega final do plano com assinaturas até **22/09/2026**; confirmar com o professor como proceder caso a coleta de assinaturas ainda esteja pendente.
+Confirmar o texto com a entidade, o CNPJ da paróquia (se aplicável) e as regras para participação de menores. Transferir o conteúdo aprovado ao PDF oficial. A assinatura deve ser feita pelo representante da entidade, pelos seis alunos e pelo professor; não inserir assinaturas simuladas. O enunciado informa entrega final do plano com assinaturas até **22/09/2026**; confirmar com o professor como proceder caso a coleta de assinaturas ainda esteja pendente.
