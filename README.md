@@ -2,9 +2,9 @@
 
 Site dos **Mensageiros da Cruz Tupã**, da **Paróquia São Pedro Apóstolo**. Next.js, TypeScript e Supabase, preparado para Vercel. BMAD e suas skills permanecem apenas neste projeto.
 
-## Estado da entrega — 18/09/2026
+## Estado da entrega — 22/09/2026
 
-**Primeira versão implementada e verificada localmente. Supabase ainda não criado/configurado; nenhum deploy Vercel realizado.** A prévia funciona sem conta, mas login e persistência reais dependem da ativação descrita abaixo. Publicar o código no GitHub não publica automaticamente o site.
+**Primeira versão implementada; banco Supabase conectado e verificado; nenhum deploy Vercel realizado.** O projeto Supabase `sistema-mensageiros-da-cruz` (`phaysezdaxyqtbnvgbpj`) contém as sete tabelas da migração, todas com RLS. A Data API está habilitada. O Auth impede cadastro público, permite e-mail/senha, exige senha de 12 caracteres, usa JWT de 900 segundos e aceita o retorno local em `/auth/confirm`. As chaves foram salvas apenas em `.env.local`, ignorado pelo Git. A consulta à tabela `actions` com a chave administrativa retornou HTTP 200; com a chave pública, HTTP 401, conforme a ausência intencional de acesso anônimo. Ainda falta criar a primeira coordenação e testar o Auth hospedado com contas de teste. Publicar o código no GitHub não publica automaticamente o site.
 
 Repositório: [site-mensageiros-da-cruz-IHC-II](https://github.com/KenzoOsako/site-mensageiros-da-cruz-IHC-II).
 
@@ -90,7 +90,7 @@ No painel Supabase, procure **Connect** e **Settings → API Keys**. Os nomes de
 | `SUPABASE_SERVICE_ROLE_KEY` | Chave administrativa `service_role`, somente no servidor e scripts administrativos |
 | `NEXT_PUBLIC_SITE_URL` | Origem do próprio site, como `http://localhost:3000`, sem caminho de página |
 
-Nunca coloque a chave administrativa no campo da chave pública. A configuração hospedada ainda precisa ser testada com as chaves do projeto criado; se o painel apresentar um modelo novo de chaves, confira a [documentação de API Keys](https://supabase.com/docs/guides/api/api-keys) antes de substituir credenciais.
+Nunca coloque a chave administrativa no campo da chave pública. Neste ambiente local, as chaves existentes do projeto já estão em `.env.local` e a Data API respondeu ao teste. Em um novo computador ou na Vercel, configure as variáveis novamente; não copie o segredo para o Git. Se o painel apresentar um modelo novo de chaves, confira a [documentação de API Keys](https://supabase.com/docs/guides/api/api-keys) antes de substituir credenciais.
 
 Em **Authentication → URL Configuration**, use `http://localhost:3000` como Site URL no teste local; inclua `http://localhost:3000/auth/confirm` entre os redirecionamentos permitidos. Se usar outra porta/host, mantenha a mesma origem em todas as configurações. Na publicação, troque Site URL para o domínio HTTPS definitivo e permita seu `/auth/confirm`. Os scripts geram o link a partir de `NEXT_PUBLIC_SITE_URL`, portanto uma origem errada produz convites para o endereço errado. [Configuração de URLs](https://supabase.com/docs/guides/auth/redirect-urls).
 
@@ -155,14 +155,14 @@ Validar textos, rotina de convites, necessidades por ação e termos usados nas 
 
 ### Prioridade 1 — ativar e verificar os serviços
 
-- [ ] Criar projeto Supabase e registrar responsáveis pela conta.
-- [ ] Aplicar migração em banco novo, conferir RLS e configurar Auth/URLs/variáveis conforme acima.
+- [x] Criar projeto Supabase, aplicar migração, conferir RLS, habilitar Data API e configurar Auth/URLs e variáveis locais.
+- [ ] Registrar com a entidade os responsáveis pela conta Supabase.
 - [ ] Criar a primeira coordenação e dois participantes fictícios por convite.
 - [ ] Validar convite de uso único, senha, login/logout, sessão após recarregar, recuperação e convite expirado no Auth hospedado.
 - [ ] Testar no serviço real a separação de dados entre os dois participantes e a visão administrativa; conferir também Minhas confirmações na coordenação.
 - [ ] Confirmar persistência após recarregar: ação, participação, tarefa, oferta e recebimento parcial.
 - [ ] Testar disputa pela mesma tarefa, cancelamento de ação, recebimento desatualizado e perda de acesso de membro desativado.
-- [ ] Criar projeto Vercel, configurar variáveis e domínio, publicar e repetir os fluxos essenciais em HTTPS.
+- [ ] Concluir a configuração de segurança da conta Vercel, criar projeto, configurar variáveis e domínio, publicar e repetir os fluxos essenciais em HTTPS.
 - [ ] Conferir elegibilidade, limites e adequação dos planos gratuitos da equipe; definir backup, teste de restauração e procedimento para indisponibilidade.
 
 ### Prioridade 2 — validar com a entidade e entregar a extensão
