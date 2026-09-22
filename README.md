@@ -42,7 +42,7 @@ Detalhes da evidência: [primeira versão](./_bmad-output/implementation-artifac
 | `_bmad-output/` | Especificações, regras, plano de validação e relatórios |
 | `.agents/skills/`, `_bmad/` | BMAD instalado somente neste projeto |
 
-Os PDFs originais da disciplina permanecem na pasta local e não são publicados. Os documentos Trabalho 2 e Trabalho 2 – formulário ainda precisam ter seu preenchimento final, revisão e assinatura confirmados; a implementação do site não substitui essa entrega acadêmica.
+Os PDFs originais da disciplina permanecem na pasta local e não são publicados. Um [rascunho do plano extensionista](./docs/plano-trabalho-2-rascunho.md) reúne o texto já sustentado pelas informações disponíveis e marca os campos desconhecidos. Os documentos Trabalho 2 e Trabalho 2 – formulário ainda precisam de revisão com a entidade, preenchimento final e assinaturas; a implementação do site não substitui essa entrega acadêmica.
 
 ## Rodar e avaliar agora
 
@@ -122,7 +122,7 @@ Passo a passo:
 5. Acesse `/`, `/previa`, `/entrar` e o fluxo completo com contas fictícias. Gere novos links se os anteriores apontavam para localhost. Só então convide participantes reais.
 6. Defina responsáveis por manutenção, recuperação de acesso, atualização de dependências e backup/restauração. Guardar código no GitHub não é backup do banco.
 
-O plano Hobby da Vercel é para uso pessoal/não comercial, sujeito aos termos e limites. O Supabase Free possui limites e pode pausar por inatividade; a gratuidade não garante disponibilidade contínua nem backups automáticos. Antes de uso real, a equipe deve conferir a adequação aos planos e definir cópias de segurança.
+O [plano Hobby da Vercel](https://vercel.com/docs/plans/hobby) é gratuito e restrito a uso pessoal ou não comercial; a equipe e a entidade devem confirmar que o uso pretendido se enquadra nessa condição. O [Supabase Free](https://supabase.com/pricing) oferece 500 MB de banco e pode [pausar projetos com pouca atividade após sete dias](https://supabase.com/docs/guides/platform/free-project-pausing). Não há backup automático disponível para recuperação no plano gratuito: a [recomendação oficial](https://supabase.com/docs/guides/platform/backups) é exportar regularmente os dados com `supabase db dump` e guardar cópias fora do serviço. Definir responsável, frequência, local protegido e teste de restauração antes de armazenar dados reais. A gratuidade não garante disponibilidade contínua.
 
 ## Verificação
 
@@ -132,6 +132,8 @@ npm run typecheck
 npm run build
 npm audit
 ```
+
+Em 22/09/2026, `npm audit` consultou o registro npm e não encontrou vulnerabilidades nas dependências instaladas; repetir antes de publicar e periodicamente depois.
 
 Com o servidor iniciado (`npm run start` após o build), execute também `npm run test:http`. Esse teste verifica público, redirecionamento de visitantes e a política CSP com nonce dos scripts. As páginas são dinâmicas para gerar um nonce por resposta; a integração Supabase ocorre no servidor.
 

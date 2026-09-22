@@ -4,6 +4,7 @@ node_modules/
 !.env.example
 *.tsbuildinfo
 tmp/
+/output/
 
 # Artefatos locais e documentos acadêmicos de referência (preservados no disco).
 /*.pdf
