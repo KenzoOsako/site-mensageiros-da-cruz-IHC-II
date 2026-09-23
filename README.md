@@ -4,7 +4,7 @@ Site dos **Mensageiros da Cruz Tupã**, da **Paróquia São Pedro Apóstolo**. N
 
 ## Estado da entrega — 23/09/2026
 
-**Primeira versão publicada em [HTTPS na Vercel](https://site-mensageiros-da-cruz-ihc-ii.vercel.app/); banco Supabase conectado e verificado.** O projeto Supabase `sistema-mensageiros-da-cruz` (`phaysezdaxyqtbnvgbpj`) contém as sete tabelas da migração, todas com RLS. A Data API está habilitada. O Auth impede cadastro público, permite e-mail/senha, exige senha de 12 caracteres, usa JWT de 900 segundos e aceita os retornos local e publicado em `/auth/confirm`. As chaves foram salvas apenas em `.env.local` e nas variáveis de Production da Vercel, sem entrar no Git. A consulta à tabela `actions` com a chave administrativa retornou HTTP 200; com a chave pública, HTTP 401, conforme a ausência intencional de acesso anônimo. A primeira conta de coordenação e seu perfil ativo foram criados; o convite privado aguarda a definição de senha pela pessoa convidada. O fluxo completo do Auth hospedado e a persistência com contas de teste ainda precisam de validação.
+**Primeira versão publicada em [HTTPS na Vercel](https://site-mensageiros-da-cruz-ihc-ii.vercel.app/); banco Supabase conectado e verificado.** O projeto Supabase `sistema-mensageiros-da-cruz` (`phaysezdaxyqtbnvgbpj`) contém as sete tabelas da migração, todas com RLS. A Data API está habilitada. O Auth impede cadastro público, permite e-mail/senha, exige senha de 12 caracteres, usa JWT de 900 segundos e aceita os retornos local e publicado em `/auth/confirm`. As chaves foram salvas apenas em `.env.local` e nas variáveis de Production da Vercel, sem entrar no Git. A consulta à tabela `actions` com a chave administrativa retornou HTTP 200; com a chave pública, HTTP 401, conforme a ausência intencional de acesso anônimo. A primeira coordenação ativou o convite, definiu a própria senha e acessou `/painel`. Parte dos fluxos hospedados já foi validada, conforme a seção **Verificação**; a validação com a entidade ainda está pendente.
 
 Repositório: [site-mensageiros-da-cruz-IHC-II](https://github.com/KenzoOsako/site-mensageiros-da-cruz-IHC-II).
 
@@ -137,7 +137,9 @@ Em 22/09/2026, `npm audit` consultou o registro npm e não encontrou vulnerabili
 
 Com o servidor iniciado (`npm run start` após o build), execute também `npm run test:http`. Esse teste verifica público, redirecionamento de visitantes e a política CSP com nonce dos scripts. As páginas são dinâmicas para gerar um nonce por resposta; a integração Supabase ocorre no servidor.
 
-Os testes usam PostgreSQL embarcado (PGlite) e executam a migração real, inclusive políticas RLS e permissões simulando os grants padrão do Supabase. Verificam visitantes, papéis, privacidade, duplicidade, disputa de tarefa, recebimento parcial, limites, cancelamento e inativação. Os testes dos handlers usam o código TypeScript de produção com fronteiras controladas; o teste de sessão atravessa o cliente Supabase SSR e cookies usando respostas HTTP fictícias. **Não validam o serviço Auth hospedado**: após preencher as chaves, testar dois participantes e um coordenador no Supabase real, incluindo convite, senha, sessão, recarregamento e saída.
+Os testes usam PostgreSQL embarcado (PGlite) e executam a migração real, inclusive políticas RLS e permissões simulando os grants padrão do Supabase. Verificam visitantes, papéis, privacidade, duplicidade, disputa de tarefa, recebimento parcial, limites, cancelamento e inativação. Os testes dos handlers usam o código TypeScript de produção com fronteiras controladas; o teste de sessão atravessa o cliente Supabase SSR e cookies usando respostas HTTP fictícias.
+
+Em 23/09/2026, um teste temporário no **Supabase hospedado** passou 29 verificações com coordenação e dois participantes fictícios: login por API, criação de ação/tarefa/material, RLS, privacidade das confirmações e ofertas, tarefa exclusiva, recebimento parcial restrito à coordenação, persistência e bloqueio de membro inativo. As três contas e a ação de teste foram removidas. Pela **interface publicada**, a primeira coordenação consumiu o convite, definiu a própria senha e entrou em `/painel`; a sessão continuou válida após recarregar. Uma ação claramente fictícia foi criada pela interface, com participação, tarefa concluída, material, oferta e recebimento parcial. Todos os estados persistiram após recarregar. A ação e seus registros dependentes foram removidos; a agenda voltou a zero ações. Ainda faltam convite de participantes pela interface, logout e novo login, recuperação, convite expirado e casos de cancelamento/atualização desatualizada no serviço hospedado.
 
 ## BMAD local
 
@@ -159,11 +161,11 @@ Validar textos, rotina de convites, necessidades por ação e termos usados nas 
 
 - [x] Criar projeto Supabase, aplicar migração, conferir RLS, habilitar Data API e configurar Auth/URLs e variáveis locais.
 - [ ] Registrar com a entidade os responsáveis pela conta Supabase.
-- [x] Criar a primeira conta de coordenação e seu perfil ativo; gerar convite privado para ativação no domínio publicado.
-- [ ] A primeira coordenação deve definir a própria senha pelo convite; depois, criar dois participantes fictícios por convite.
-- [ ] Validar convite de uso único, senha, login/logout, sessão após recarregar, recuperação e convite expirado no Auth hospedado.
-- [ ] Testar no serviço real a separação de dados entre os dois participantes e a visão administrativa; conferir também Minhas confirmações na coordenação.
-- [ ] Confirmar persistência após recarregar: ação, participação, tarefa, oferta e recebimento parcial.
+- [x] Criar a primeira conta de coordenação e seu perfil ativo; ativar convite no domínio publicado e definir senha pela própria pessoa.
+- [x] Verificar primeiro login e sessão da coordenação após recarregar; formulário de convites acessível.
+- [x] Testar no Supabase hospedado a separação de dados de dois participantes fictícios e a visão administrativa; conferir **Minhas confirmações** da coordenação na interface.
+- [x] Confirmar pela interface publicada a persistência após recarregar: ação, participação, tarefa, oferta e recebimento parcial; limpar registros fictícios depois.
+- [ ] Validar convite de participantes pela interface, logout/novo login, recuperação e convite expirado no Auth hospedado.
 - [ ] Testar disputa pela mesma tarefa, cancelamento de ação, recebimento desatualizado e perda de acesso de membro desativado.
 - [x] Concluir 2FA da conta Vercel, criar projeto ligado ao GitHub, configurar quatro variáveis somente em Production, publicar e verificar páginas públicas e de entrada em HTTPS.
 - [x] Definir Site URL e retorno HTTPS no Supabase, preservando o retorno local para desenvolvimento.
