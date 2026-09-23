@@ -2,9 +2,9 @@
 
 Site dos **Mensageiros da Cruz Tupã**, da **Paróquia São Pedro Apóstolo**. Next.js, TypeScript e Supabase, preparado para Vercel. BMAD e suas skills permanecem apenas neste projeto.
 
-## Estado da entrega — 22/09/2026
+## Estado da entrega — 23/09/2026
 
-**Primeira versão implementada; banco Supabase conectado e verificado; nenhum deploy Vercel realizado.** O projeto Supabase `sistema-mensageiros-da-cruz` (`phaysezdaxyqtbnvgbpj`) contém as sete tabelas da migração, todas com RLS. A Data API está habilitada. O Auth impede cadastro público, permite e-mail/senha, exige senha de 12 caracteres, usa JWT de 900 segundos e aceita o retorno local em `/auth/confirm`. As chaves foram salvas apenas em `.env.local`, ignorado pelo Git. A consulta à tabela `actions` com a chave administrativa retornou HTTP 200; com a chave pública, HTTP 401, conforme a ausência intencional de acesso anônimo. Ainda falta criar a primeira coordenação e testar o Auth hospedado com contas de teste. Publicar o código no GitHub não publica automaticamente o site.
+**Primeira versão publicada em [HTTPS na Vercel](https://site-mensageiros-da-cruz-ihc-ii.vercel.app/); banco Supabase conectado e verificado.** O projeto Supabase `sistema-mensageiros-da-cruz` (`phaysezdaxyqtbnvgbpj`) contém as sete tabelas da migração, todas com RLS. A Data API está habilitada. O Auth impede cadastro público, permite e-mail/senha, exige senha de 12 caracteres, usa JWT de 900 segundos e aceita os retornos local e publicado em `/auth/confirm`. As chaves foram salvas apenas em `.env.local` e nas variáveis de Production da Vercel, sem entrar no Git. A consulta à tabela `actions` com a chave administrativa retornou HTTP 200; com a chave pública, HTTP 401, conforme a ausência intencional de acesso anônimo. A primeira conta de coordenação e seu perfil ativo foram criados; o convite privado aguarda a definição de senha pela pessoa convidada. O fluxo completo do Auth hospedado e a persistência com contas de teste ainda precisam de validação.
 
 Repositório: [site-mensageiros-da-cruz-IHC-II](https://github.com/KenzoOsako/site-mensageiros-da-cruz-IHC-II).
 
@@ -42,7 +42,7 @@ Detalhes da evidência: [primeira versão](./_bmad-output/implementation-artifac
 | `_bmad-output/` | Especificações, regras, plano de validação e relatórios |
 | `.agents/skills/`, `_bmad/` | BMAD instalado somente neste projeto |
 
-Os PDFs originais da disciplina permanecem na pasta local e não são publicados. Um [rascunho do plano extensionista](./docs/plano-trabalho-2-rascunho.md) reúne o texto já sustentado pelas informações disponíveis e marca os campos desconhecidos. Os documentos Trabalho 2 e Trabalho 2 – formulário ainda precisam de revisão com a entidade, preenchimento final e assinaturas; a implementação do site não substitui essa entrega acadêmica.
+Os PDFs originais da disciplina permanecem na pasta local e não são publicados. Um [rascunho do plano extensionista](./docs/plano-trabalho-2-rascunho.md) reúne o texto já sustentado pelas informações disponíveis e marca os campos desconhecidos. Os documentos Trabalho 2 e Trabalho 2 – formulário ainda precisam de revisão com a entidade, preenchimento final e assinaturas; a implementação do site não substitui essa entrega acadêmica. O [guia curto de operação](./docs/guia-de-uso.md) orienta coordenação e participantes.
 
 ## Rodar e avaliar agora
 
@@ -159,7 +159,8 @@ Validar textos, rotina de convites, necessidades por ação e termos usados nas 
 
 - [x] Criar projeto Supabase, aplicar migração, conferir RLS, habilitar Data API e configurar Auth/URLs e variáveis locais.
 - [ ] Registrar com a entidade os responsáveis pela conta Supabase.
-- [ ] Criar a primeira coordenação e dois participantes fictícios por convite.
+- [x] Criar a primeira conta de coordenação e seu perfil ativo; gerar convite privado para ativação no domínio publicado.
+- [ ] A primeira coordenação deve definir a própria senha pelo convite; depois, criar dois participantes fictícios por convite.
 - [ ] Validar convite de uso único, senha, login/logout, sessão após recarregar, recuperação e convite expirado no Auth hospedado.
 - [ ] Testar no serviço real a separação de dados entre os dois participantes e a visão administrativa; conferir também Minhas confirmações na coordenação.
 - [ ] Confirmar persistência após recarregar: ação, participação, tarefa, oferta e recebimento parcial.
@@ -176,7 +177,8 @@ Validar textos, rotina de convites, necessidades por ação e termos usados nas 
 - [ ] Definir quais dados são necessários, regras de acesso/retenção/exclusão e orientação para participação de menores com a entidade. Confirmação no site não substitui autorização do responsável.
 - [ ] Realizar avaliação de usabilidade no celular e por teclado: encontrar ação, compreender detalhes, confirmar, assumir tarefa e oferecer material; registrar dificuldades e retestar correções.
 - [ ] Revisar/preencher os documentos acadêmicos Trabalho 2 e Trabalho 2 – formulário, obter validação/assinaturas exigidas e organizar evidências da atividade extensionista. Confirmar o prazo da disciplina separadamente do prazo do software.
-- [ ] Preparar orientação curta para coordenação e participantes e entregar a responsabilidade operacional à entidade.
+- [x] Preparar orientação curta para coordenação e participantes em `docs/guia-de-uso.md`.
+- [ ] Validar a orientação com a entidade e entregar a responsabilidade operacional.
 
 ### Melhorias futuras, sem compromisso de implementação nesta versão
 
