@@ -2,6 +2,16 @@
 
 Site dos **Mensageiros da Cruz Tupã**, da **Paróquia São Pedro Apóstolo**. Next.js, TypeScript e Supabase, preparado para Vercel. BMAD e suas skills permanecem apenas neste projeto.
 
+## Avaliar o projeto
+
+- **Problema:** organizar ações comunitárias, participação, tarefas e contribuições de materiais, distinguindo oferta de recebimento.
+- **Arquitetura:** Next.js e TypeScript na aplicação; Supabase Auth e PostgreSQL com políticas RLS na área privada.
+- **Experimentar:** execute localmente e abra `/previa`, que usa dados fictícios em memória e não exige contas reais.
+- **Verificar:** `npm ci`, `npm test`, `npm run build` e `npm run typecheck`; com o servidor iniciado, `npm run test:http`.
+- **Operação e limites:** [guia de uso](docs/guia-de-uso.md), instruções abaixo e [CI](.github/workflows/ci.yml). A validação com a entidade e a responsabilidade operacional continuam pendentes.
+
+As evidências datadas abaixo são históricas. Não demonstram, por si só, a configuração ou disponibilidade atual dos serviços hospedados. As verificações da CI usam dados sintéticos e não precisam de credenciais do Supabase real.
+
 ## Estado da entrega — 23/09/2026
 
 **Primeira versão publicada em [HTTPS na Vercel](https://site-mensageiros-da-cruz-ihc-ii.vercel.app/); banco Supabase conectado e verificado.** O projeto Supabase `sistema-mensageiros-da-cruz` (`phaysezdaxyqtbnvgbpj`) contém as sete tabelas da migração, todas com RLS. A Data API está habilitada. O Auth impede cadastro público, permite e-mail/senha, exige senha de 12 caracteres, usa JWT de 900 segundos e aceita os retornos local e publicado em `/auth/confirm`. As chaves foram salvas apenas em `.env.local` e nas variáveis de Production da Vercel, sem entrar no Git. A consulta à tabela `actions` com a chave administrativa retornou HTTP 200; com a chave pública, HTTP 401, conforme a ausência intencional de acesso anônimo. A primeira coordenação ativou o convite, definiu a própria senha e acessou `/painel`. Parte dos fluxos hospedados já foi validada, conforme a seção **Verificação**; a validação com a entidade ainda está pendente.

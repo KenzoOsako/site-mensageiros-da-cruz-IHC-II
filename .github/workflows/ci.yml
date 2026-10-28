@@ -1,0 +1,55 @@
+name: Application checks
+
+on:
+  pull_request:
+  push:
+    branches: [main, 'codex/**']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: application-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-build-and-http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm test
+      - run: npm run build
+      - run: npm run typecheck
+      - name: Public pages, visitor redirects and response headers
+        shell: bash
+        run: |
+          npm run start -- --hostname 127.0.0.1 > /tmp/application.log 2>&1 &
+          application_pid=$!
+          trap 'kill "$application_pid" 2>/dev/null || true' EXIT
+          ready=false
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:3000/ > /dev/null; then
+              ready=true
+              break
+            fi
+            if ! kill -0 "$application_pid" 2>/dev/null; then
+              cat /tmp/application.log
+              exit 1
+            fi
+            sleep 1
+          done
+          if [ "$ready" != true ]; then
+            cat /tmp/application.log
+            exit 1
+          fi
+          npm run test:http
