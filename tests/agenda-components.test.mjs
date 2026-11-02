@@ -147,3 +147,73 @@ test('agenda mantém SSR, atualiza na montagem/virada/foco/visibilidade e limpa 
     delete globalThis.__agendaHooks;
   }
 });
+test('prévia aplica as correções da avaliação heurística a tarefas, ofertas e recebimentos', () => {
+  const app = harness(Preview);
+  const actualNow = Date.now;
+  let instant = 1000;
+  Date.now = () => instant;
+  try {
+    let tree = app.render();
+    // Ação passada: compromissos bloqueados e situação "Realizada".
+    filters(tree).props.onChange({ ...defaults, period: 'past' });
+    tree = app.render();
+    assert.equal(detail(tree).key, 'anterior');
+    assert.match(text(tree), /Realizada/);
+    assert.ok(nodes(detail(tree)).filter(node => ['button', 'input'].includes(node.type)).every(node => node.props.disabled));
+    filters(tree).props.onChange(defaults);
+    tree = app.render();
+    // Tarefa: duplo clique não conclui; devolver e reabrir funcionam.
+    button(tree, 'Assumir tarefa').props.onClick();
+    tree = app.render();
+    instant += 100;
+    button(tree, 'Concluir').props.onClick();
+    tree = app.render();
+    assert.ok(button(tree, 'Devolver'), 'segundo clique imediato é ignorado');
+    instant += 1000;
+    button(tree, 'Devolver').props.onClick();
+    tree = app.render();
+    assert.match(text(tree), /2 de 2 disponíveis/);
+    instant += 1000;
+    button(tree, 'Assumir tarefa').props.onClick();
+    tree = app.render();
+    instant += 1000;
+    button(tree, 'Concluir').props.onClick();
+    tree = app.render();
+    instant += 1000;
+    button(tree, 'Reabrir').props.onClick();
+    tree = app.render();
+    assert.ok(button(tree, 'Concluir'));
+    // Oferta acima da necessidade pede confirmação; depois pode ser editada e retirada.
+    const form = () => nodes(app.render()).find(node => node.type === 'form');
+    const input = () => nodes(form()).find(node => node.type === 'input');
+    input().props.onChange({ target: { value: '999' } });
+    form().props.onSubmit({ preventDefault() {} });
+    tree = app.render();
+    assert.match(text(tree), /passa da necessidade/);
+    button(tree, 'Confirmar 999 folhas').props.onClick();
+    tree = app.render();
+    assert.match(text(tree), /Sua oferta: 999 folhas/);
+    input().props.onChange({ target: { value: '20' } });
+    form().props.onSubmit({ preventDefault() {} });
+    assert.match(text(app.render()), /Sua oferta: 20 folhas/);
+    input().props.onChange({ target: { value: '' } });
+    form().props.onSubmit({ preventDefault() {} });
+    assert.match(text(app.render()), /Informe um número inteiro de 1 a 100.000/);
+    // Coordenação: recebimentos ficam no histórico e podem ser estornados.
+    nodes(app.render()).find(node => node.type === 'select' && node.props.value === 'participant').props.onChange({ target: { value: 'coordinator' } });
+    tree = app.render();
+    assert.match(text(tree), /Você está vendo como Coordenação fictícia/);
+    const receiptForm = () => nodes(app.render()).filter(node => node.type === 'form')[1];
+    nodes(receiptForm()).find(node => node.type === 'input').props.onChange({ target: { value: '5' } });
+    receiptForm().props.onSubmit({ preventDefault() {} });
+    tree = app.render();
+    assert.match(text(tree), /Recebimento 1: 5 folhas/);
+    button(tree, 'Estornar').props.onClick();
+    tree = app.render();
+    assert.match(text(tree), /Nenhum recebimento registrado ainda/);
+    button(tree, 'Retirar oferta').props.onClick();
+    assert.doesNotMatch(text(app.render()), /Sua oferta:/);
+  } finally {
+    Date.now = actualNow;
+  }
+});
