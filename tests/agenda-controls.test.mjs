@@ -50,8 +50,8 @@ test('controles reais atualizam cartões, contagem, filtros combinados e recuper
   assert.equal(all.controls.find(node => node.props?.type === 'checkbox').props.checked, false);
   assert.equal(all.controls.find(node => node.props?.type === 'search').props.value, '');
   all.controls.find(node => node.type === 'button').props.onClick();
-  const reset = check(['own', 'other']);
-  assert.equal(reset.controls.find(node => node.type === 'select').props.value, 'upcoming');
+  const reset = check(['past', 'own', 'other']);
+  assert.equal(reset.controls.find(node => node.type === 'select').props.value, 'all');
 });
 
 test('relógio atualiza no próximo dia de Brasília e limpa timer e listeners', () => {

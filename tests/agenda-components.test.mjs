@@ -166,23 +166,23 @@ test('prévia aplica as correções da avaliação heurística a tarefas, oferta
     button(tree, 'Assumir tarefa').props.onClick();
     tree = app.render();
     instant += 100;
-    button(tree, 'Concluir').props.onClick();
+    button(tree, '✓ Marcar como concluída').props.onClick();
     tree = app.render();
-    assert.ok(button(tree, 'Devolver'), 'segundo clique imediato é ignorado');
+    assert.ok(button(tree, 'Devolver tarefa'), 'segundo clique imediato é ignorado');
     instant += 1000;
-    button(tree, 'Devolver').props.onClick();
+    button(tree, 'Devolver tarefa').props.onClick();
     tree = app.render();
     assert.match(text(tree), /2 de 2 disponíveis/);
     instant += 1000;
     button(tree, 'Assumir tarefa').props.onClick();
     tree = app.render();
     instant += 1000;
-    button(tree, 'Concluir').props.onClick();
+    button(tree, '✓ Marcar como concluída').props.onClick();
     tree = app.render();
     instant += 1000;
     button(tree, 'Reabrir').props.onClick();
     tree = app.render();
-    assert.ok(button(tree, 'Concluir'));
+    assert.ok(button(tree, '✓ Marcar como concluída'));
     // Oferta acima da necessidade pede confirmação; depois pode ser editada e retirada.
     const form = () => nodes(app.render()).find(node => node.type === 'form');
     const input = () => nodes(form()).find(node => node.type === 'input');
@@ -192,10 +192,10 @@ test('prévia aplica as correções da avaliação heurística a tarefas, oferta
     assert.match(text(tree), /passa da necessidade/);
     button(tree, 'Confirmar 999 folhas').props.onClick();
     tree = app.render();
-    assert.match(text(tree), /Sua oferta: 999 folhas/);
+    assert.match(text(tree), /Sua doação prometida: 999 folhas/);
     input().props.onChange({ target: { value: '20' } });
     form().props.onSubmit({ preventDefault() {} });
-    assert.match(text(app.render()), /Sua oferta: 20 folhas/);
+    assert.match(text(app.render()), /Sua doação prometida: 20 folhas/);
     input().props.onChange({ target: { value: '' } });
     form().props.onSubmit({ preventDefault() {} });
     assert.match(text(app.render()), /Informe um número inteiro de 1 a 100.000/);
@@ -203,16 +203,18 @@ test('prévia aplica as correções da avaliação heurística a tarefas, oferta
     nodes(app.render()).find(node => node.type === 'select' && node.props.value === 'participant').props.onChange({ target: { value: 'coordinator' } });
     tree = app.render();
     assert.match(text(tree), /Você está vendo como Coordenação fictícia/);
-    const receiptForm = () => nodes(app.render()).filter(node => node.type === 'form')[1];
+    const receiptForm = () => nodes(app.render()).filter(node => node.type === 'form')[0];
     nodes(receiptForm()).find(node => node.type === 'input').props.onChange({ target: { value: '5' } });
     receiptForm().props.onSubmit({ preventDefault() {} });
     tree = app.render();
     assert.match(text(tree), /Recebimento 1: 5 folhas/);
-    button(tree, 'Estornar').props.onClick();
+    button(tree, 'Desfazer').props.onClick();
     tree = app.render();
     assert.match(text(tree), /Nenhum recebimento registrado ainda/);
-    button(tree, 'Retirar oferta').props.onClick();
-    assert.doesNotMatch(text(app.render()), /Sua oferta:/);
+    assert.doesNotMatch(text(tree), /Sua doação prometida:/, 'coordenação não vê o formulário de doação');
+    nodes(app.render()).find(node => node.type === 'select' && node.props.value === 'coordinator').props.onChange({ target: { value: 'participant' } });
+    button(app.render(), 'Cancelar doação').props.onClick();
+    assert.doesNotMatch(text(app.render()), /Sua doação prometida:/);
   } finally {
     Date.now = actualNow;
   }

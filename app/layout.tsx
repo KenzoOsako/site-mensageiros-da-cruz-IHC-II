@@ -1,3 +1,4 @@
+import { contact } from '@/lib/contact';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteNav } from '@/components/site-nav';
@@ -17,6 +18,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <SiteNav />
     </div></header>
     <main id="conteudo">{children}</main>
-    <footer className="site-footer"><div><strong>Mensageiros da Cruz Tupã</strong><p>Paróquia São Pedro Apóstolo</p></div><p>Juventude em Ação · Projeto em desenvolvimento</p><a href="#topo">Voltar ao topo da página ↑</a></footer>
+    <footer className="site-footer"><div><strong>Mensageiros da Cruz Tupã</strong><p>Paróquia São Pedro Apóstolo · Contato: Instagram <a href={contact.instagramUrl} target="_blank" rel="noreferrer">{contact.instagram}</a></p></div><p>Juventude em Ação · Projeto em desenvolvimento</p><a href="#topo">Voltar ao topo da página ↑</a></footer>
   </body></html>;
 }
